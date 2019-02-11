@@ -5,20 +5,20 @@
 # Source0 file verified with key 0xDBD2CE893E2D1C87 (cfeck@kde.org)
 #
 Name     : libkeduvocdocument
-Version  : 18.08.0
-Release  : 1
-URL      : https://download.kde.org/stable/applications/18.08.0/src/libkeduvocdocument-18.08.0.tar.xz
-Source0  : https://download.kde.org/stable/applications/18.08.0/src/libkeduvocdocument-18.08.0.tar.xz
-Source99 : https://download.kde.org/stable/applications/18.08.0/src/libkeduvocdocument-18.08.0.tar.xz.sig
-Summary  : No detailed summary available
+Version  : 18.12.2
+Release  : 2
+URL      : https://download.kde.org/stable/applications/18.12.2/src/libkeduvocdocument-18.12.2.tar.xz
+Source0  : https://download.kde.org/stable/applications/18.12.2/src/libkeduvocdocument-18.12.2.tar.xz
+Source99 : https://download.kde.org/stable/applications/18.12.2/src/libkeduvocdocument-18.12.2.tar.xz.sig
+Summary  : Common libraries for KDE Edu applications
 Group    : Development/Tools
 License  : BSD-3-Clause GPL-2.0 LGPL-2.0
-Requires: libkeduvocdocument-lib
-Requires: libkeduvocdocument-license
-Requires: libkeduvocdocument-locales
+Requires: libkeduvocdocument-lib = %{version}-%{release}
+Requires: libkeduvocdocument-license = %{version}-%{release}
+Requires: libkeduvocdocument-locales = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-kde
-BuildRequires : qtbase-dev qtbase-extras mesa-dev
+BuildRequires : qtbase-dev mesa-dev
 
 %description
 Contents of libkeduvocdocument as of July 2014, and brief description of each module:
@@ -26,8 +26,8 @@ Contents of libkeduvocdocument as of July 2014, and brief description of each mo
 %package dev
 Summary: dev components for the libkeduvocdocument package.
 Group: Development
-Requires: libkeduvocdocument-lib
-Provides: libkeduvocdocument-devel
+Requires: libkeduvocdocument-lib = %{version}-%{release}
+Provides: libkeduvocdocument-devel = %{version}-%{release}
 
 %description dev
 dev components for the libkeduvocdocument package.
@@ -36,7 +36,7 @@ dev components for the libkeduvocdocument package.
 %package lib
 Summary: lib components for the libkeduvocdocument package.
 Group: Libraries
-Requires: libkeduvocdocument-license
+Requires: libkeduvocdocument-license = %{version}-%{release}
 
 %description lib
 lib components for the libkeduvocdocument package.
@@ -59,27 +59,27 @@ locales components for the libkeduvocdocument package.
 
 
 %prep
-%setup -q -n libkeduvocdocument-18.08.0
+%setup -q -n libkeduvocdocument-18.12.2
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1535236265
-mkdir clr-build
+export SOURCE_DATE_EPOCH=1549907122
+mkdir -p clr-build
 pushd clr-build
 %cmake ..
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1535236265
+export SOURCE_DATE_EPOCH=1549907122
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/libkeduvocdocument
-cp COPYING %{buildroot}/usr/share/doc/libkeduvocdocument/COPYING
-cp COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/doc/libkeduvocdocument/COPYING-CMAKE-SCRIPTS
-cp COPYING.LIB %{buildroot}/usr/share/doc/libkeduvocdocument/COPYING.LIB
+mkdir -p %{buildroot}/usr/share/package-licenses/libkeduvocdocument
+cp COPYING %{buildroot}/usr/share/package-licenses/libkeduvocdocument/COPYING
+cp COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/libkeduvocdocument/COPYING-CMAKE-SCRIPTS
+cp COPYING.LIB %{buildroot}/usr/share/package-licenses/libkeduvocdocument/COPYING.LIB
 pushd clr-build
 %make_install
 popd
@@ -136,10 +136,10 @@ popd
 /usr/lib64/libKEduVocDocument.so.5.0.0
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/libkeduvocdocument/COPYING
-/usr/share/doc/libkeduvocdocument/COPYING-CMAKE-SCRIPTS
-/usr/share/doc/libkeduvocdocument/COPYING.LIB
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/libkeduvocdocument/COPYING
+/usr/share/package-licenses/libkeduvocdocument/COPYING-CMAKE-SCRIPTS
+/usr/share/package-licenses/libkeduvocdocument/COPYING.LIB
 
 %files locales -f libkeduvocdocument.lang
 %defattr(-,root,root,-)
