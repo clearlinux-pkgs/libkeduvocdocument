@@ -5,14 +5,14 @@
 # Source0 file verified with key 0xBB463350D6EF31EF (heiko@shruuf.de)
 #
 Name     : libkeduvocdocument
-Version  : 21.04.2
-Release  : 29
-URL      : https://download.kde.org/stable/release-service/21.04.2/src/libkeduvocdocument-21.04.2.tar.xz
-Source0  : https://download.kde.org/stable/release-service/21.04.2/src/libkeduvocdocument-21.04.2.tar.xz
-Source1  : https://download.kde.org/stable/release-service/21.04.2/src/libkeduvocdocument-21.04.2.tar.xz.sig
+Version  : 21.08.1
+Release  : 30
+URL      : https://download.kde.org/stable/release-service/21.08.1/src/libkeduvocdocument-21.08.1.tar.xz
+Source0  : https://download.kde.org/stable/release-service/21.08.1/src/libkeduvocdocument-21.08.1.tar.xz
+Source1  : https://download.kde.org/stable/release-service/21.08.1/src/libkeduvocdocument-21.08.1.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
-License  : BSD-3-Clause GPL-2.0 LGPL-2.0
+License  : BSD-3-Clause GFDL-1.2 GPL-2.0
 Requires: libkeduvocdocument-lib = %{version}-%{release}
 Requires: libkeduvocdocument-license = %{version}-%{release}
 Requires: libkeduvocdocument-locales = %{version}-%{release}
@@ -61,36 +61,36 @@ locales components for the libkeduvocdocument package.
 
 
 %prep
-%setup -q -n libkeduvocdocument-21.04.2
-cd %{_builddir}/libkeduvocdocument-21.04.2
+%setup -q -n libkeduvocdocument-21.08.1
+cd %{_builddir}/libkeduvocdocument-21.08.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1623365632
+export SOURCE_DATE_EPOCH=1630907031
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 %cmake ..
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1623365632
+export SOURCE_DATE_EPOCH=1630907031
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libkeduvocdocument
-cp %{_builddir}/libkeduvocdocument-21.04.2/COPYING %{buildroot}/usr/share/package-licenses/libkeduvocdocument/4cc77b90af91e615a64ae04893fdffa7939db84c
-cp %{_builddir}/libkeduvocdocument-21.04.2/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/libkeduvocdocument/ff3ed70db4739b3c6747c7f624fe2bad70802987
-cp %{_builddir}/libkeduvocdocument-21.04.2/COPYING.LIB %{buildroot}/usr/share/package-licenses/libkeduvocdocument/ba8966e2473a9969bdcab3dc82274c817cfd98a1
+cp %{_builddir}/libkeduvocdocument-21.08.1/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/libkeduvocdocument/ff3ed70db4739b3c6747c7f624fe2bad70802987
+cp %{_builddir}/libkeduvocdocument-21.08.1/LICENSES/GFDL-1.2-or-later.txt %{buildroot}/usr/share/package-licenses/libkeduvocdocument/ee03d68f6be20b170e5ea5d114d6acafb3f2d1dc
+cp %{_builddir}/libkeduvocdocument-21.08.1/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/libkeduvocdocument/3e8971c6c5f16674958913a94a36b1ea7a00ac46
 pushd clr-build
 %make_install
 popd
@@ -148,8 +148,8 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/libkeduvocdocument/4cc77b90af91e615a64ae04893fdffa7939db84c
-/usr/share/package-licenses/libkeduvocdocument/ba8966e2473a9969bdcab3dc82274c817cfd98a1
+/usr/share/package-licenses/libkeduvocdocument/3e8971c6c5f16674958913a94a36b1ea7a00ac46
+/usr/share/package-licenses/libkeduvocdocument/ee03d68f6be20b170e5ea5d114d6acafb3f2d1dc
 /usr/share/package-licenses/libkeduvocdocument/ff3ed70db4739b3c6747c7f624fe2bad70802987
 
 %files locales -f libkeduvocdocument.lang
