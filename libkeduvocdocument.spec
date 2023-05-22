@@ -6,11 +6,11 @@
 # Source0 file verified with key 0xBB463350D6EF31EF (heiko@shruuf.de)
 #
 Name     : libkeduvocdocument
-Version  : 23.04.0
-Release  : 51
-URL      : https://download.kde.org/stable/release-service/23.04.0/src/libkeduvocdocument-23.04.0.tar.xz
-Source0  : https://download.kde.org/stable/release-service/23.04.0/src/libkeduvocdocument-23.04.0.tar.xz
-Source1  : https://download.kde.org/stable/release-service/23.04.0/src/libkeduvocdocument-23.04.0.tar.xz.sig
+Version  : 23.04.1
+Release  : 52
+URL      : https://download.kde.org/stable/release-service/23.04.1/src/libkeduvocdocument-23.04.1.tar.xz
+Source0  : https://download.kde.org/stable/release-service/23.04.1/src/libkeduvocdocument-23.04.1.tar.xz
+Source1  : https://download.kde.org/stable/release-service/23.04.1/src/libkeduvocdocument-23.04.1.tar.xz.sig
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-1-Clause BSD-3-Clause GFDL-1.2 GPL-2.0
@@ -64,47 +64,69 @@ locales components for the libkeduvocdocument package.
 
 
 %prep
-%setup -q -n libkeduvocdocument-23.04.0
-cd %{_builddir}/libkeduvocdocument-23.04.0
+%setup -q -n libkeduvocdocument-23.04.1
+cd %{_builddir}/libkeduvocdocument-23.04.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1682013340
+export SOURCE_DATE_EPOCH=1684777074
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+%cmake ..
+make  %{?_smp_mflags}
+popd
+mkdir -p clr-build-avx2
+pushd clr-build-avx2
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export FCFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export FFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export CXXFLAGS="$CXXFLAGS -O3 -Wl,-z,x86-64-v3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd -march=x86-64-v3 "
+export CFLAGS="$CFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export FFLAGS="$FFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export FCFLAGS="$FCFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
 %cmake ..
 make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1682013340
+export SOURCE_DATE_EPOCH=1684777074
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/libkeduvocdocument
 cp %{_builddir}/libkeduvocdocument-%{version}/COPYING-CMAKE-SCRIPTS %{buildroot}/usr/share/package-licenses/libkeduvocdocument/ff3ed70db4739b3c6747c7f624fe2bad70802987 || :
 cp %{_builddir}/libkeduvocdocument-%{version}/LICENSES/BSD-1-Clause.txt %{buildroot}/usr/share/package-licenses/libkeduvocdocument/6620eeea6ee5696c0b887850201ba4c607380356 || :
 cp %{_builddir}/libkeduvocdocument-%{version}/LICENSES/GFDL-1.2-or-later.txt %{buildroot}/usr/share/package-licenses/libkeduvocdocument/ee03d68f6be20b170e5ea5d114d6acafb3f2d1dc || :
 cp %{_builddir}/libkeduvocdocument-%{version}/LICENSES/GPL-2.0-or-later.txt %{buildroot}/usr/share/package-licenses/libkeduvocdocument/3e8971c6c5f16674958913a94a36b1ea7a00ac46 || :
+pushd clr-build-avx2
+%make_install_v3  || :
+popd
 pushd clr-build
 %make_install
 popd
 %find_lang libkeduvocdocument
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
 
 %files dev
 %defattr(-,root,root,-)
+/V3/usr/lib64/libKEduVocDocument.so
 /usr/include/libkeduvocdocument/KEduVocArticle
 /usr/include/libkeduvocdocument/KEduVocConjugation
 /usr/include/libkeduvocdocument/KEduVocContainer
@@ -148,6 +170,8 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
+/V3/usr/lib64/libKEduVocDocument.so.5
+/V3/usr/lib64/libKEduVocDocument.so.5.1.0
 /usr/lib64/libKEduVocDocument.so.5
 /usr/lib64/libKEduVocDocument.so.5.1.0
 
